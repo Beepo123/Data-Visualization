@@ -40,11 +40,21 @@ class LinkedList:
     def insert_values(self, data_list):
         # remove reference to previous linked list
         # to create new linked list using data_list
-        self.head = None
+        #self.head = None
         for data in data_list:
             self.insert_at_end(data)
 
+    def print_ll_len(self):
+        if self.head == None:
+            return 0
+        
+        counter = 1
+        curr_node = self.head
+        while curr_node.next is not None:
+            counter += 1
+            curr_node = curr_node.next
 
+        return counter + 1
 
 if __name__ == '__main__':
     numbers = [x for x in range(10)]
@@ -56,4 +66,5 @@ if __name__ == '__main__':
 
     ll.insert_values(numbers)
     ll.print()
+    print(ll.print_ll_len())
     print("end of file")
