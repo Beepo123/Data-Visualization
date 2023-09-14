@@ -12,9 +12,6 @@ class Solution:
     and return head of new sorted linkedlist"""
 
     def mergeTwoList(self, list1, list2):
-        # list1 = self.sortLinkedList(list1)
-        # list2 = self.sortLinkedList(list2)
-
         # case 1: both linkedlist is empty
         # case 2: one linkedlist is emtpy
         # case 3: both have at least 1 node
@@ -86,7 +83,7 @@ class LinkedList:
         for data in data_list:
             self.insert_at_end(data)
 
-    def print_ll_len(self):
+    def length(self):
         if self.head == None:
             return 0
 
@@ -96,7 +93,48 @@ class LinkedList:
             counter += 1
             curr_node = curr_node.next
 
-        print(counter)
+        return counter
+
+    def remove_at(self, index):
+        """Remove node at specified index"""
+        if index<0 or index>=self.length():
+            print(f"not a valid index {index}")
+            return
+
+        if index == 0:
+            self.head = self.head.next
+            return
+        
+        count = 0
+        itr = self.head
+        while count < index-1:
+            itr = itr.next
+            count += 1
+
+        itr.next = itr.next.next
+        return
+    
+    def remove_by_value(self, data):
+        node = self.head
+        # if head is the node make next node the new head
+        if self.head.data == data:
+            self.head = node.next
+        else:
+            while node:
+                # if next node is the data then point current node to next next node
+                # but if next next node doesn't exists point current.next to none
+                if node.next.data == data:
+                    if node.next.next:
+                        node.next = node.next.next
+                    else:
+                        node.next = None
+                    return
+                else:
+                    node = node.next
+                    if node.next is None:
+                        return
+
+        return "no node with that data"
 
 
 if __name__ == "__main__":
@@ -105,4 +143,6 @@ if __name__ == "__main__":
     
     nums = [1,2,3,4,5]
     ll.insert_list_values(nums)
+    ll.remove_by_value(5)
     ll.print()
+    print(ll.length()) 
