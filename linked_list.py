@@ -131,18 +131,58 @@ class LinkedList:
                     return
                 else:
                     node = node.next
-                    if node.next is None:
+                    if node.data != data and node.next is None:
+                        print(f"no node with data {data}")
                         return
 
-        return "no node with that data"
 
+    def insert_at(self, index, data):
+        """insert node at specified index"""
+        if index<0 or index>self.length():
+            print(f"not a valid index {index}")
+            return
+        elif index == 0:
+            self.insert_at_beginning(data)
+        elif index == self.length():
+            self.insert_at_end(data)
+        else:
+            current = self.head
+            counter = 0
+            while current:
+                if counter == index-1:
+                    node = Node(data, current.next)
+                    current.next = node
+                    break
+
+                current = current.next
+                counter += 1
+
+            current.next = node
+
+    def insert_after_value(self, data_after, data):
+        index = 0
+        current = self.head
+        while current:
+            if current.data == data_after:
+                self.insert_at(index+1, data)
+                return
+            current = current.next
+            index += 1
+
+        print(f"no node found with {data_after} data")
 
 if __name__ == "__main__":
     ll = LinkedList()
-    ll.insert_at_beginning(10)
-    
-    nums = [1,2,3,4,5]
-    ll.insert_list_values(nums)
-    ll.remove_by_value(5)
+    ll.insert_list_values(["banana","mango","grapes","orange"])
     ll.print()
-    print(ll.length()) 
+    ll.insert_after_value("mango","apple") # insert apple after mango
+    ll.print()
+    ll.remove_by_value("orange") # remove orange from linked list
+    ll.print()
+    ll.remove_by_value("figs")
+    ll.print()
+    ll.remove_by_value("banana")
+    ll.remove_by_value("mango")
+    ll.remove_by_value("apple")
+    ll.remove_by_value("grapes")
+    ll.print()
