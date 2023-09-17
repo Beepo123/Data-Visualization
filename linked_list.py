@@ -55,18 +55,6 @@ class LinkedList:
         node = Node(data, self.head)
         self.head = node
 
-    def print(self):
-        if self.head is None:
-            print("Linked list is empty")
-            return
-        else:
-            itr = self.head
-            llstr = ""
-            while itr:
-                llstr += str(itr.data) + "--->"
-                itr = itr.next
-            print(llstr)
-
     def insert_at_end(self, data):
         if self.head is None:
             self.head = Node(data, self.head)
@@ -78,22 +66,45 @@ class LinkedList:
                 itr = itr.next
 
             itr.next = node
+    
+    def insert_at(self, index, data):
+        """insert node at specified index"""
+        if index<0 or index>self.length():
+            print(f"not a valid index {index}")
+            return
+        elif index == 0:
+            self.insert_at_beginning(data)
+        elif index == self.length():
+            self.insert_at_end(data)
+        else:
+            current = self.head
+            counter = 0
+            while current:
+                if counter == index-1:
+                    node = Node(data, current.next)
+                    current.next = node
+                    break
+
+                current = current.next
+                counter += 1
+
+            current.next = node
 
     def insert_list_values(self, data_list):
         for data in data_list:
             self.insert_at_end(data)
 
-    def length(self):
-        if self.head == None:
-            return 0
+    def insert_after_value(self, data_after, data):
+        index = 0
+        current = self.head
+        while current:
+            if current.data == data_after:
+                self.insert_at(index+1, data)
+                return
+            current = current.next
+            index += 1
 
-        counter = 0
-        curr_node = self.head
-        while curr_node:
-            counter += 1
-            curr_node = curr_node.next
-
-        return counter
+        print(f"no node found with {data_after} data")
 
     def remove_at(self, index):
         """Remove node at specified index"""
@@ -135,41 +146,29 @@ class LinkedList:
                         print(f"no node with data {data}")
                         return
 
+    def length(self):
+        if self.head == None:
+            return 0
 
-    def insert_at(self, index, data):
-        """insert node at specified index"""
-        if index<0 or index>self.length():
-            print(f"not a valid index {index}")
+        counter = 0
+        curr_node = self.head
+        while curr_node:
+            counter += 1
+            curr_node = curr_node.next
+
+        return counter
+
+    def print(self):
+        if self.head is None:
+            print("Linked list is empty")
             return
-        elif index == 0:
-            self.insert_at_beginning(data)
-        elif index == self.length():
-            self.insert_at_end(data)
         else:
-            current = self.head
-            counter = 0
-            while current:
-                if counter == index-1:
-                    node = Node(data, current.next)
-                    current.next = node
-                    break
-
-                current = current.next
-                counter += 1
-
-            current.next = node
-
-    def insert_after_value(self, data_after, data):
-        index = 0
-        current = self.head
-        while current:
-            if current.data == data_after:
-                self.insert_at(index+1, data)
-                return
-            current = current.next
-            index += 1
-
-        print(f"no node found with {data_after} data")
+            itr = self.head
+            llstr = ""
+            while itr:
+                llstr += str(itr.data) + "--->"
+                itr = itr.next
+            print(llstr)
 
 if __name__ == "__main__":
     ll = LinkedList()
