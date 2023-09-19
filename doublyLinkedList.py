@@ -10,22 +10,46 @@ class DoublyLinkedList:
         self.head = head
         self.tail = tail
 
+    def display(self):
+        if self.head is None:
+            print(f"empty doublylinkedlist")
+            return
+        else:
+            current_node = self.head
+            dllstr = ""
+            while current_node:
+                dllstr += str(current_node.data) + " -> "
+                current_node = current_node.next
+            print(f"doublylinkedlist {dllstr}")
+
+    def reverse_display(self):
+        if self.head is None:
+            print(f"empty doublylinkedlist")
+            return
+        else:
+            current_node = self.tail
+            dllstr = ""
+            while current_node:
+                dllstr += str(current_node.data) + " -> "
+                current_node = current_node.prev
+
+            print(f"reversed doublylinkedlist: {dllstr}")
+
     def insert_at_beginning(self, data):
         """Insert node at the beginning of doubly linkedlist"""
-        new_node = Node(data, next=self.head)
-        new_node.next = self.head
-        if self.head:
-            self.head.prev = new_node
-        else:
+        if self.head is None:
+            new_node = Node(data)
+            self.head = new_node
             self.tail = new_node
-
-        self.head = new_node
+        else:
+            new_node = Node(data, self.head)
+            self.head.prev = new_node
+            self.head = new_node
 
     def insert_at_end(self, data):
-        new_node = Node(data)
-        current_node = self.head
         # if tail node exists, add to at end
         if self.tail:
+            new_node = Node(data)
             end_node = self.tail
             end_node.next = new_node
             new_node.prev = end_node
@@ -33,15 +57,18 @@ class DoublyLinkedList:
             return
 
         # if there are node/s but no reference to tail
+        current_node = self.head
         if current_node:
             while current_node.next:
                 current_node = current_node.next
+
+            new_node = Node(data)
             current_node.next = new_node
             new_node.prev = current_node
-        else:  # head points to none
+            self.tail = new_node
+        else:
             self.head = new_node
-
-        self.tail = new_node
+            self.tail = new_node
 
     def insert_at_index(self, data, index):
         length = self.length()
@@ -150,31 +177,6 @@ class DoublyLinkedList:
                     break
 
             return counter
-
-    def display(self):
-        if self.length() == 0:
-            print(f"empty doublylinkedlist")
-            return
-        else:
-            current_node = self.head
-            dllstr = ""
-            while current_node:
-                dllstr += str(current_node.data) + " -> "
-                current_node = current_node.next
-            print(f"doublylinkedlist {dllstr}")
-
-    def reverse_display(self):
-        if self.length() == 0:
-            print(f"empty doublylinkedlist")
-            return
-        else:
-            current_node = self.tail
-            dllstr = ""
-            while current_node:
-                dllstr += str(current_node.data) + " -> "
-                current_node = current_node.prev
-
-            print(f"reversed doublylinkedlist: {dllstr}")
 
     def get_values(self):
         values = []
