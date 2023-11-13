@@ -191,13 +191,13 @@ class DoublyLinkedList:
 if __name__ == "__main__":
     dll = DoublyLinkedList()
     dll.insert_at_beginning("samuel")
-    dll.insert_at_end("benitez")
-    dll.insert_at_end("gipit")
+    dll.insert_at_end("sam")
+    dll.insert_at_end("sammy")
     dll.insert_at_index("sample data node", 3)
 
-    data_list = [1, 2, 3, 4, "meow", 6, 8, 5, 3, "samuel"]
+    data_list = [1, 2, 3, 4, "meow", 6, 8, 5, 3, "sam"]
     dll.insert_list_values(data_list)
-    dll.insert_value_after("samuel", "gipit")
+    dll.insert_value_after("sam", "me")
     dll.remove_at_end()
 
     values = dll.get_values()
